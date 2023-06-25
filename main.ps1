@@ -1,0 +1,1 @@
+New-AzResourceGroupDeployment -ResourceGroupName "az-dev-001" -TemplateFile "C:\Users\csocsi\Documents\GitHub\az\arm.json" -TemplateParameterFile "C:\Users\csocsi\Documents\GitHub\az\arm.parameters.json"
