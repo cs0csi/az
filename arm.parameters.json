@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "value": "TEST-3"
+            "value": "TESTVM-77"
         },
         "adminUsername": {
             "value": "csocsi" 
