@@ -19,12 +19,36 @@
       "metadata": {
         "description": "Password for the virtual machine."
       }
+    },
+    "osVersion": {
+      "type": "string",
+      "defaultValue": "2022-Datacenter",
+      "allowedValues": [
+        "2022-Datacenter",
+        "2022-Standard",
+        "2022-Essentials"
+      ],
+      "metadata": {
+        "description": "The version of the operating system."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_B1s",
+      "metadata": {
+        "description": "The size of the virtual machine."
+      }
+    },
+    "osDiskType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "metadata": {
+        "description": "The type of the OS disk."
+      }
     }
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "vmSize": "Standard_B1s",
-    "osDiskType": "Standard_LRS",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
     "vnetName": "[concat(parameters('vmName'), '-vnet')]",
     "subnetName": "[concat(parameters('vmName'), '-subnet')]",
@@ -155,7 +179,7 @@
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[variables('vmSize')]"
+          "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
           "computerName": "[parameters('vmName')]",
@@ -166,13 +190,13 @@
           "imageReference": {
             "publisher": "MicrosoftWindowsServer",
             "offer": "WindowsServer",
-            "sku": "2022-Datacenter",
+            "sku": "[parameters('osVersion')]",
             "version": "latest"
           },
           "osDisk": {
             "createOption": "FromImage",
             "managedDisk": {
-              "storageAccountType": "[variables('osDiskType')]"
+              "storageAccountType": "[parameters('osDiskType')]"
             }
           }
         },

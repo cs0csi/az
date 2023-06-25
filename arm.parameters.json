@@ -3,13 +3,22 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "value": "TESTVM-77"
+            "value": "testadasda"
         },
         "adminUsername": {
-            "value": "csocsi" 
+            "value": "asdasd"
         },
         "adminPassword": {
-            "value": "Sajt.1234" 
+            "value": "asd2121312.asda"
+        },
+        "osVersion": {
+            "value": "2022-Datacenter"
+        },
+        "vmSize": {
+            "value": "Standard_B1s"
+        },
+        "osDiskType": {
+            "value": "Standard_LRS"
         }
     }
 }

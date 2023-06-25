@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ARM Parameters</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <label for="vmName">VM Name:</label>
+        <input type="text" id="vmName" name="vmName" placeholder="Enter VM Name">
+
+        <label for="adminUsername">Admin Username:</label>
+        <input type="text" id="adminUsername" name="adminUsername" placeholder="Enter Admin Username">
+
+        <label for="adminPassword">Admin Password:</label>
+        <input type="password" id="adminPassword" name="adminPassword" placeholder="Enter Admin Password">
+
+        <label for="osVersion">OS Version:</label>
+        <input type="text" id="osVersion" name="osVersion" placeholder="Enter OS Version">
+
+        <label for="vmSize">VM Size:</label>
+        <input type="text" id="vmSize" name="vmSize" placeholder="Enter VM Size">
+
+        <label for="osDiskType">OS Disk Type:</label>
+        <input type="text" id="osDiskType" name="osDiskType" placeholder="Enter OS Disk Type">
+
+        <button type="submit">Save as JSON</button>
+    </form>
+
+    <script>
+        window.onload = function() {
+            var form = document.getElementById("form");
+            form.onsubmit = function(e) {
+                e.preventDefault();
+
+                var parameters = {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "vmName": {
+                            "value": document.getElementById("vmName").value
+                        },
+                        "adminUsername": {
+                            "value": document.getElementById("adminUsername").value
+                        },
+                        "adminPassword": {
+                            "value": document.getElementById("adminPassword").value
+                        },
+                        "osVersion": {
+                            "value": document.getElementById("osVersion").value
+                        },
+                        "vmSize": {
+                            "value": document.getElementById("vmSize").value
+                        },
+                        "osDiskType": {
+                            "value": document.getElementById("osDiskType").value
+                        }
+                    }
+                };
+
+                var blob = new Blob([JSON.stringify(parameters, null, 4)], { type: "application/json" });
+                var url = URL.createObjectURL(blob);
+
+                var a = document.createElement("a");
+                a.href = url;
+                a.download = "arm.parameters.json";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+
+            // Set default values from query parameters
+            var queryString = window.location.search;
+            var urlParams = new URLSearchParams(queryString);
+
+            document.getElementById("vmName").value = urlParams.get("vmName") || "";
+            document.getElementById("adminUsername").value = urlParams.get("adminUsername") || "";
+            document.getElementById("adminPassword").value = urlParams.get("adminPassword") || "";
+            document.getElementById("osVersion").value = urlParams.get("osVersion") || "";
+            document.getElementById("vmSize").value = urlParams.get("vmSize") || "";
+            document.getElementById("osDiskType").value = urlParams.get("osDiskType") || "";
+        };
+    </script>
+</body>
+</html>
