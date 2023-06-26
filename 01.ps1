@@ -10,12 +10,7 @@ Configuration MyFirstConfiguration {
             Ensure = "Present"
             Name   = "Web-Server"
         }
-       #Install ASP.NET 4.5
-       WindowsFeature ASPNet45
-       {
-         Ensure = "Present"
-         Name = "Web-Asp-Net45"
-       }
+
         # Stop the default website
         xWebsite DefaultSite {
             Ensure       = "Present"
