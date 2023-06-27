@@ -1,4 +1,4 @@
-Configuration MyFirstConfiguration {
+Configuration CCW {
     Import-DscResource -ModuleName PsDesiredStateConfiguration
     Import-DscResource -Module xWebAdministration
     Import-DscResource -Module xPSDesiredStateConfiguration
@@ -21,7 +21,7 @@ Configuration MyFirstConfiguration {
         }
 
         # Download the website content
-        $packageUri = "https://azdevst001.blob.core.windows.net/windows-powershell-dsc/CoolColorsWebsite.html"
+        $packageUri = "https://azdevst10.blob.core.windows.net/webcont/CoolColorsWebsite.html"
         $packageOutFile = "C:\inetpub\CoolColorsWebsite\index.html"
 
         xRemoteFile FileDownload {
