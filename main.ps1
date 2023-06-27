@@ -28,7 +28,7 @@ Set-AzStorageBlobContent -Container $containerName -Context $storageAccountConte
 
 Read-Host "Part2"
 
-$configurationpath = "./01.ps1"
+$configurationpath = "./ccv.ps1"
 
 $DscConfigurationParameters = @{
     'configurationpath'  = $configurationpath
@@ -57,7 +57,7 @@ $SetDscParameters = @{
     'resourcegroupname'  = $ResourceGroup
     'VMname' = $vmName
     'ArchiveStorageAccountName' = $Storagename
-    'ArchiveBlobName' = '01.ps1.zip'
+    'ArchiveBlobName' = 'ccv.ps1.zip'
     'AutoUpdate' = $true
     'ConfigurationName' = $ConfigurationName
 }
