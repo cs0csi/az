@@ -1,45 +1,48 @@
 # Connect to Azure (login using your Azure account)
+Write-Host "Connecting to Azure..."
 Connect-AzAccount
 
 # Set variables
-$ResourceGroup = "az-dev-10"
-$location = "South Central US"
-$StorageName = "azdevst10"
-$containerName = "webcont"
-$blobName = "CoolColorsWebsite.html"
-$localFilePath = "C:\Users\csocsi\Documents\GitHub\az\CoolColorsWebsite.html"
-
+$ResourceGroup = "az-dev-10000"
+$Location = "westeurope"
+$StorageName = "azdevst10000"
+$ContainerName = "webcont"
+$BlobName = "CoolColorsWebsite.html"
+$LocalFilePath = "C:\Users\csocsi\Documents\GitHub\az\CoolColorsWebsite.html"
 
 # Create a resource group
-New-AzResourceGroup -Name $resourceGroup -Location $location
+Write-Host "Creating resource group..."
+New-AzResourceGroup -Name $ResourceGroup -Location $Location
 
 # Create a storage account
-$storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroup -Name $StorageName -Location $location -SkuName "Standard_LRS" -Kind "StorageV2" -AccessTier "Hot"
+Write-Host "Creating storage account..."
+$StorageAccount = New-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StorageName -Location $Location -SkuName "Standard_LRS" -Kind "StorageV2" -AccessTier "Hot"
 
 # Create a storage account context
-$storageAccountContext = $storageAccount.Context
+$StorageAccountContext = $StorageAccount.Context
 
 # Create a new container in the storage account
-New-AzStorageContainer -Name $containerName -Context $storageAccountContext -Permission Blob
+Write-Host "Creating storage container..."
+New-AzStorageContainer -Name $ContainerName -Context $StorageAccountContext -Permission Blob
 
 # Upload file to the container
+Write-Host "Uploading file to storage container..."
+Set-AzStorageBlobContent -Container $ContainerName -Context $StorageAccountContext -File $LocalFilePath -Blob $BlobName
 
-Set-AzStorageBlobContent -Container $containerName -Context $storageAccountContext -File $localFilePath -Blob $blobName
+Read-Host "Part 2"
 
-Read-Host "Part2"
-
-$configurationpath = "./ccv.ps1"
+$ConfigurationPath = "./ccv.ps1"
 
 $DscConfigurationParameters = @{
-    'configurationpath'  = $configurationpath
+    'configurationpath'  = $ConfigurationPath
     'resourcegroupname'  = $ResourceGroup
     'StorageAccountName' = $StorageName
 }
 
-Publish-AzVMDscConfiguration  @DscConfigurationParameters -force -Verbose
+Write-Host "Publishing Azure VM DSC configuration..."
+Publish-AzVMDscConfiguration @DscConfigurationParameters -Force
 
 Read-Host "Part 3"
-
 
 $jsonParameterFilePath = "C:\Users\csocsi\Documents\GitHub\az\arm.parameters.json"
 $jsonRMFilePath = "C:\Users\csocsi\Documents\GitHub\az\arm.json"
@@ -50,18 +53,22 @@ $jsonContent = Get-Content -Path $jsonParameterFilePath -Raw
 
 $jsonObject = $jsonContent | ConvertFrom-Json
 
-$vmName = $jsonObject.parameters.vmName.value
+$VmName = $jsonObject.parameters.vmName.value
 
 $SetDscParameters = @{
     'Version'  = '2.76'
     'resourcegroupname'  = $ResourceGroup
-    'VMname' = $vmName
-    'ArchiveStorageAccountName' = $Storagename
+    'VMname' = $VmName
+    'ArchiveStorageAccountName' = $StorageName
     'ArchiveBlobName' = 'ccv.ps1.zip'
     'AutoUpdate' = $true
     'ConfigurationName' = $ConfigurationName
 }
 
+Write-Host "Deploying Azure Resource Manager template..."
 New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroup -TemplateFile $jsonRMFilePath -TemplateParameterFile $jsonParameterFilePath
 
-Set-AzVMDscExtension @SetDscParameters -Verbose
+Read-Host "Part 4"
+
+Write-Host "Setting VM DSC extension..."
+Set-AzVMDscExtension @SetDscParameters

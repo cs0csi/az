@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "value": "testadasda"
+            "value": "TestaasVM222"
         },
         "adminUsername": {
-            "value": "asdasd"
+            "value": "admaaaasdin"
         },
         "adminPassword": {
-            "value": "asd2121312.asda"
+            "value": "Straonagx.1988aasd"
         },
         "osVersion": {
             "value": "2022-Datacenter"
