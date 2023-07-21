@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmName": {
-            "value": "TestaasVM222"
+            "value": "Test001"
         },
         "adminUsername": {
-            "value": "admaaaasdin"
+            "value": "testuser"
         },
         "adminPassword": {
-            "value": "Straonagx.1988aasd"
+            "value": "Budapest-2013!"
         },
         "osVersion": {
             "value": "2022-Datacenter"

@@ -21,7 +21,7 @@ Configuration CCW {
         }
 
         # Download the website content
-        $packageUri = "https://azdevst10000.blob.core.windows.net/webcont/CoolColorsWebsite.html"
+        $packageUri = "https://azdevst20000.blob.core.windows.net/webcont/CoolColorsWebsite.html"
         $packageOutFile = "C:\inetpub\CoolColorsWebsite\index.html"
 
         xRemoteFile FileDownload {

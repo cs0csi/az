@@ -3,9 +3,9 @@ Write-Host "Connecting to Azure..."
 Connect-AzAccount
 
 # Set variables
-$ResourceGroup = "az-dev-10000"
+$ResourceGroup = "az-dev-20000"
 $Location = "westeurope"
-$StorageName = "azdevst10000"
+$StorageName = "azdevst20000"
 $ContainerName = "webcont"
 $BlobName = "CoolColorsWebsite.html"
 $LocalFilePath = "C:\Users\csocsi\Documents\GitHub\az\CoolColorsWebsite.html"
